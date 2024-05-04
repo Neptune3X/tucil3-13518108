@@ -2,6 +2,8 @@
 Vincent Hasiholan - 13518108
 
 Dictionary.txt berisikian list kata - kata bahasa inggris yang diambil dari vocabulary list di website English First (EF)
-List kata - kata yang diambil dibatasi dari Tingkat Beginner Level 1 hingga Tingkat Beginner Level 3
+List kata - kata yang diambil dibatasi dari Tingkat Beginner Level 1 hingga Tingkat Upper Advance Level 16
+
+Yang sudah dimasukkan : Beginner 1-3
 
 
