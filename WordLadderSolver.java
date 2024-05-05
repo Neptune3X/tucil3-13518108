@@ -67,9 +67,11 @@ public class WordLadderSolver {
     }
 
     private static void loadWordsFromFile(String filename, Set<String> wordList) {
-        try (Scanner scanner = new Scanner(new FileReader(filename))) {
-            while (scanner.hasNextLine()) {
-                String word = scanner.nextLine().trim().toUpperCase();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Replace periods and underscores with no space and convert to uppercase
+                String word = line.trim().toUpperCase().replaceAll("[._]", "");
                 wordList.add(word);
             }
         } catch (IOException e) {
