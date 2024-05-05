@@ -31,22 +31,123 @@ public class WordLadderSolver {
         }
     }
 
-    // Uniform Cost Search (UCS)
     public List<String> ucs(String startWord, String endWord) {
-        
-        return null;
+        PriorityQueue<Node> queue = new PriorityQueue<>();
+        Set<String> visited = new HashSet<>();
+        Map<String, Integer> pathCost = new HashMap<>();
+        Map<String, String> parent = new HashMap<>();
+
+        queue.offer(new Node(startWord, 0));
+        pathCost.put(startWord, 0);
+
+        while (!queue.isEmpty()) {
+            Node currentNode = queue.poll();
+            String currentWord = currentNode.word;
+            int currentCost = currentNode.cost;
+
+            if (currentWord.equals(endWord)) {
+                return reconstructPath(startWord, endWord, parent);
+            }
+
+            visited.add(currentWord);
+
+            for (String neighbor : graph.get(currentWord)) {
+                int newCost = currentCost + 1; // Assuming each edge has a cost of 1
+                if (!visited.contains(neighbor) && (!pathCost.containsKey(neighbor) || newCost < pathCost.get(neighbor))) {
+                    pathCost.put(neighbor, newCost);
+                    parent.put(neighbor, currentWord);
+                    queue.offer(new Node(neighbor, newCost));
+                }
+            }
+        }
+
+        return null; // No path found
     }
 
     // A* Search
     public List<String> aStar(String startWord, String endWord) {
-        
-        return null;
+        PriorityQueue<Node> queue = new PriorityQueue<>();
+        Set<String> visited = new HashSet<>();
+        Map<String, Integer> pathCost = new HashMap<>();
+        Map<String, String> parent = new HashMap<>();
+
+        queue.offer(new Node(startWord, 0 + heuristic(startWord, endWord))); // f = g + h
+        pathCost.put(startWord, 0);
+
+        while (!queue.isEmpty()) {
+            Node currentNode = queue.poll();
+            String currentWord = currentNode.word;
+            int currentCost = currentNode.cost;
+
+            if (currentWord.equals(endWord)) {
+                return reconstructPath(startWord, endWord, parent);
+            }
+
+            visited.add(currentWord);
+
+            for (String neighbor : graph.get(currentWord)) {
+                int newCost = currentCost + 1; // Assuming each edge has a cost of 1
+                if (!visited.contains(neighbor) && (!pathCost.containsKey(neighbor) || newCost < pathCost.get(neighbor))) {
+                    pathCost.put(neighbor, newCost);
+                    parent.put(neighbor, currentWord);
+                    queue.offer(new Node(neighbor, newCost + heuristic(neighbor, endWord))); // f = g + h
+                }
+            }
+        }
+
+        return null; // No path found
     }
 
     // Greedy Best First Search
     public List<String> greedyBestFirstSearch(String startWord, String endWord) {
-        
-        return null;
+        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(n -> heuristic(n.word, endWord)));
+        Set<String> visited = new HashSet<>();
+        Map<String, String> parent = new HashMap<>();
+
+        queue.offer(new Node(startWord, 0));
+
+        while (!queue.isEmpty()) {
+            Node currentNode = queue.poll();
+            String currentWord = currentNode.word;
+
+            if (currentWord.equals(endWord)) {
+                return reconstructPath(startWord, endWord, parent);
+            }
+
+            visited.add(currentWord);
+
+            for (String neighbor : graph.get(currentWord)) {
+                if (!visited.contains(neighbor)) {
+                    parent.put(neighbor, currentWord);
+                    queue.offer(new Node(neighbor, heuristic(neighbor, endWord)));
+                }
+            }
+        }
+
+        return null; // No path found
+    }
+
+    private int heuristic(String word, String endWord) {
+        // Heuristic function (e.g., Hamming distance, Levenshtein distance, etc.)
+        // Here, we use Hamming distance as a simple heuristic
+        int distance = 0;
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) != endWord.charAt(i)) {
+                distance++;
+            }
+        }
+        return distance;
+    }
+
+    private List<String> reconstructPath(String startWord, String endWord, Map<String, String> parent) {
+        List<String> path = new ArrayList<>();
+        String currentWord = endWord;
+        while (!currentWord.equals(startWord)) {
+            path.add(0, currentWord);
+            currentWord = parent.get(currentWord);
+        }
+        path.add(0, startWord);
+        return path;
     }
 
     public static void main(String[] args) {
