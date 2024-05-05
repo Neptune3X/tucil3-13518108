@@ -33,19 +33,19 @@ public class WordLadderSolver {
 
     // Uniform Cost Search (UCS)
     public List<String> ucs(String startWord, String endWord) {
-        // Implement UCS algorithm here
+        
         return null;
     }
 
     // A* Search
     public List<String> aStar(String startWord, String endWord) {
-        // Implement A* algorithm here
+        
         return null;
     }
 
     // Greedy Best First Search
     public List<String> greedyBestFirstSearch(String startWord, String endWord) {
-        // Implement Greedy Best First Search algorithm here
+        
         return null;
     }
 
@@ -56,14 +56,64 @@ public class WordLadderSolver {
         WordLadderSolver solver = new WordLadderSolver(wordList);
 
         Scanner scanner = new Scanner(System.in);
+        try{
+            System.out.print("Enter start word: ");
+            String startWord = scanner.nextLine().trim().toUpperCase();
 
-        System.out.print("Enter start word: ");
-        String startWord = scanner.nextLine().trim().toUpperCase();
+            System.out.print("Enter end word: ");
+            String endWord = scanner.nextLine().trim().toUpperCase();
 
-        System.out.print("Enter end word: ");
-        String endWord = scanner.nextLine().trim().toUpperCase();
+            // Call the appropriate search function here and print the word ladder
+            if(!wordList.contains(startWord) || !wordList.contains(endWord)){
+                return;
+            }
+            else{
+                if(startWord.length() != endWord.length()){
+                    return;
+                }
+                else{
+                    //Insert UCS, A*, and GFS
+                    System.out.println("UCS:");
+                    long startTimeUCS = System.nanoTime();
+                    List<String> pathUCS = solver.ucs(startWord, endWord);
+                    long endTimeUCS = System.nanoTime();
 
-        // Call the appropriate search function here and print the word ladder
+                    if (pathUCS != null) {
+                        System.out.println("Shortest path: " + pathUCS);
+                    } else {
+                        System.out.println("No path found.");
+                    }
+                    System.out.println("Time taken (UCS): " + (endTimeUCS - startTimeUCS) / 1_000);
+
+                    System.out.println("Greedy Best First Search:");
+                    long startTimeGFS = System.nanoTime();
+                    List<String> pathGFS = solver.greedyBestFirstSearch(startWord, endWord);
+                    long endTimeGFS = System.nanoTime();
+                    
+                    if (pathGFS != null) {
+                        System.out.println("Shortest path: " + pathGFS);
+                    } else {
+                        System.out.println("No path found.");
+                    }
+                    System.out.println("Time taken (UCS): " + (endTimeGFS - startTimeGFS) / 1_000);
+
+                    System.out.println("A*:");
+                    long startTimeAstar = System.nanoTime();
+                    List<String> pathAstar = solver.aStar(startWord, endWord);
+                    long endTimeAstar = System.nanoTime();
+                    
+                    if (pathAstar != null) {
+                        System.out.println("Shortest path: " + pathAstar);
+                    } else {
+                        System.out.println("No path found.");
+                    }
+                    System.out.println("Time taken (UCS): " + (endTimeAstar - startTimeAstar) / 1_000);
+                }
+            }
+        }
+        finally{
+            scanner.close();
+        }
     }
 
     private static void loadWordsFromFile(String filename, Set<String> wordList) {
