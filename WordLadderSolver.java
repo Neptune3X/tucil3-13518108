@@ -166,10 +166,12 @@ public class WordLadderSolver {
 
             // Call the appropriate search function here and print the word ladder
             if(!wordList.contains(startWord) || !wordList.contains(endWord)){
+                System.out.println("I'm sorry, but the word that you choose is not in the creator's dictionary");
                 return;
             }
             else{
                 if(startWord.length() != endWord.length()){
+                    System.out.println("I'm sorry, but the word didn't have the same length");
                     return;
                 }
                 else{

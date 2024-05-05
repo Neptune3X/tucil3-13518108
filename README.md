@@ -2,7 +2,7 @@
 Vincent Hasiholan - 13518108
 
 Dictionary.txt berisikian list kata - kata bahasa inggris yang diambil dari vocabulary list di website English First (EF)
-List kata - kata yang diambil dibatasi dengan total kata yang dipilih adalah 1000 ~ kata (Beginner Level 1 Unit 1 - Intermediate Level 9 Unit 6)
+List kata - kata yang diambil dibatasi dengan total kata yang dipilih adalah 1000 ~ 1500 kata (Beginner Level 1 Unit 1 - Intermediate Level 9 Unit 6) ditambahkan beberapa ratus kata extra yang ditambahkan dari penulis program
 
 Yang sudah dimasukkan : Beginner 1-3
 
