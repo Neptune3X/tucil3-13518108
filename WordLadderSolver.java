@@ -52,7 +52,7 @@ public class WordLadderSolver {
             visited.add(currentWord);
 
             for (String neighbor : graph.get(currentWord)) {
-                int newCost = currentCost + 1; // Assuming each edge has a cost of 1
+                int newCost = currentCost + 1;
                 if (!visited.contains(neighbor) && (!pathCost.containsKey(neighbor) || newCost < pathCost.get(neighbor))) {
                     pathCost.put(neighbor, newCost);
                     parent.put(neighbor, currentWord);
@@ -61,17 +61,16 @@ public class WordLadderSolver {
             }
         }
 
-        return null; // No path found
+        return null;
     }
 
-    // A* Search
     public List<String> aStar(String startWord, String endWord) {
         PriorityQueue<Node> queue = new PriorityQueue<>();
         Set<String> visited = new HashSet<>();
         Map<String, Integer> pathCost = new HashMap<>();
         Map<String, String> parent = new HashMap<>();
 
-        queue.offer(new Node(startWord, 0 + heuristic(startWord, endWord))); // f = g + h
+        queue.offer(new Node(startWord, 0 + heuristic(startWord, endWord)));
         pathCost.put(startWord, 0);
 
         while (!queue.isEmpty()) {
@@ -86,19 +85,18 @@ public class WordLadderSolver {
             visited.add(currentWord);
 
             for (String neighbor : graph.get(currentWord)) {
-                int newCost = currentCost + 1; // Assuming each edge has a cost of 1
+                int newCost = currentCost + 1;
                 if (!visited.contains(neighbor) && (!pathCost.containsKey(neighbor) || newCost < pathCost.get(neighbor))) {
                     pathCost.put(neighbor, newCost);
                     parent.put(neighbor, currentWord);
-                    queue.offer(new Node(neighbor, newCost + heuristic(neighbor, endWord))); // f = g + h
+                    queue.offer(new Node(neighbor, newCost + heuristic(neighbor, endWord)));
                 }
             }
         }
 
-        return null; // No path found
+        return null; 
     }
 
-    // Greedy Best First Search
     public List<String> greedyBestFirstSearch(String startWord, String endWord) {
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(n -> heuristic(n.word, endWord)));
         Set<String> visited = new HashSet<>();
@@ -124,12 +122,10 @@ public class WordLadderSolver {
             }
         }
 
-        return null; // No path found
+        return null;
     }
 
     private int heuristic(String word, String endWord) {
-        // Heuristic function (e.g., Hamming distance, Levenshtein distance, etc.)
-        // Here, we use Hamming distance as a simple heuristic
         int distance = 0;
         for (int i = 0; i < word.length(); i++) {
             if (word.charAt(i) != endWord.charAt(i)) {
@@ -157,25 +153,19 @@ public class WordLadderSolver {
         WordLadderSolver solver = new WordLadderSolver(wordList);
 
         Scanner scanner = new Scanner(System.in);
-        try{
             System.out.print("Enter start word: ");
             String startWord = scanner.nextLine().trim().toUpperCase();
 
             System.out.print("Enter end word: ");
             String endWord = scanner.nextLine().trim().toUpperCase();
-
-            // Call the appropriate search function here and print the word ladder
             if(!wordList.contains(startWord) || !wordList.contains(endWord)){
                 System.out.println("I'm sorry, but the word that you choose is not in the creator's dictionary");
-                return;
             }
             else{
                 if(startWord.length() != endWord.length()){
                     System.out.println("I'm sorry, but the word didn't have the same length");
-                    return;
                 }
                 else{
-                    //Insert UCS, A*, and GFS
                     System.out.println("UCS:");
                     long startTimeUCS = System.nanoTime();
                     List<String> pathUCS = solver.ucs(startWord, endWord);
@@ -213,17 +203,12 @@ public class WordLadderSolver {
                     System.out.println("Time taken (UCS): " + (endTimeAstar - startTimeAstar) / 1_000);
                 }
             }
-        }
-        finally{
-            scanner.close();
-        }
     }
 
     private static void loadWordsFromFile(String filename, Set<String> wordList) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // Replace periods and underscores with no space and convert to uppercase
                 String word = line.trim().toUpperCase().replaceAll("[._]", "");
                 wordList.add(word);
             }
