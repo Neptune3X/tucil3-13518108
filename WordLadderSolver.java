@@ -188,7 +188,7 @@ public class WordLadderSolver {
                 } else {
                     System.out.println("No path found.");
                 }
-                System.out.println("Time taken (UCS): " + (endTimeGFS - startTimeGFS) / 1_000);
+                System.out.println("Time taken (GBFS): " + (endTimeGFS - startTimeGFS) / 1_000);
 
                 System.out.println("A*:");
                 long startTimeAstar = System.nanoTime();
@@ -200,7 +200,7 @@ public class WordLadderSolver {
                 } else {
                     System.out.println("No path found.");
                 }
-                System.out.println("Time taken (UCS): " + (endTimeAstar - startTimeAstar) / 1_000);
+                System.out.println("Time taken (A*): " + (endTimeAstar - startTimeAstar) / 1_000);
             }
         }
     }
