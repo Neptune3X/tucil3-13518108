@@ -153,56 +153,56 @@ public class WordLadderSolver {
         WordLadderSolver solver = new WordLadderSolver(wordList);
 
         Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter start word: ");
-            String startWord = scanner.nextLine().trim().toUpperCase();
+        System.out.print("Enter start word: ");
+        String startWord = scanner.nextLine().trim().toUpperCase();
 
-            System.out.print("Enter end word: ");
-            String endWord = scanner.nextLine().trim().toUpperCase();
-            if(!wordList.contains(startWord) || !wordList.contains(endWord)){
-                System.out.println("I'm sorry, but the word that you choose is not in the creator's dictionary");
+        System.out.print("Enter end word: ");
+        String endWord = scanner.nextLine().trim().toUpperCase();
+        if(!wordList.contains(startWord) || !wordList.contains(endWord)){
+            System.out.println("I'm sorry, but the word that you choose is not in the creator's dictionary");
+        }
+        else{
+            if(startWord.length() != endWord.length()){
+                System.out.println("I'm sorry, but the word didn't have the same length");
             }
             else{
-                if(startWord.length() != endWord.length()){
-                    System.out.println("I'm sorry, but the word didn't have the same length");
+                System.out.println("UCS:");
+                long startTimeUCS = System.nanoTime();
+                List<String> pathUCS = solver.ucs(startWord, endWord);
+                long endTimeUCS = System.nanoTime();
+
+                if (pathUCS != null) {
+                    System.out.println("Shortest path: " + pathUCS);
+                } else {
+                    System.out.println("No path found.");
                 }
-                else{
-                    System.out.println("UCS:");
-                    long startTimeUCS = System.nanoTime();
-                    List<String> pathUCS = solver.ucs(startWord, endWord);
-                    long endTimeUCS = System.nanoTime();
+                System.out.println("Time taken (UCS): " + (endTimeUCS - startTimeUCS) / 1_000);
 
-                    if (pathUCS != null) {
-                        System.out.println("Shortest path: " + pathUCS);
-                    } else {
-                        System.out.println("No path found.");
-                    }
-                    System.out.println("Time taken (UCS): " + (endTimeUCS - startTimeUCS) / 1_000);
-
-                    System.out.println("Greedy Best First Search:");
-                    long startTimeGFS = System.nanoTime();
-                    List<String> pathGFS = solver.greedyBestFirstSearch(startWord, endWord);
-                    long endTimeGFS = System.nanoTime();
+                System.out.println("Greedy Best First Search:");
+                long startTimeGFS = System.nanoTime();
+                List<String> pathGFS = solver.greedyBestFirstSearch(startWord, endWord);
+                long endTimeGFS = System.nanoTime();
                     
-                    if (pathGFS != null) {
-                        System.out.println("Shortest path: " + pathGFS);
-                    } else {
-                        System.out.println("No path found.");
-                    }
-                    System.out.println("Time taken (UCS): " + (endTimeGFS - startTimeGFS) / 1_000);
-
-                    System.out.println("A*:");
-                    long startTimeAstar = System.nanoTime();
-                    List<String> pathAstar = solver.aStar(startWord, endWord);
-                    long endTimeAstar = System.nanoTime();
-                    
-                    if (pathAstar != null) {
-                        System.out.println("Shortest path: " + pathAstar);
-                    } else {
-                        System.out.println("No path found.");
-                    }
-                    System.out.println("Time taken (UCS): " + (endTimeAstar - startTimeAstar) / 1_000);
+                if (pathGFS != null) {
+                    System.out.println("Shortest path: " + pathGFS);
+                } else {
+                    System.out.println("No path found.");
                 }
+                System.out.println("Time taken (UCS): " + (endTimeGFS - startTimeGFS) / 1_000);
+
+                System.out.println("A*:");
+                long startTimeAstar = System.nanoTime();
+                List<String> pathAstar = solver.aStar(startWord, endWord);
+                long endTimeAstar = System.nanoTime();
+                    
+                if (pathAstar != null) {
+                    System.out.println("Shortest path: " + pathAstar);
+                } else {
+                    System.out.println("No path found.");
+                }
+                System.out.println("Time taken (UCS): " + (endTimeAstar - startTimeAstar) / 1_000);
             }
+        }
     }
 
     private static void loadWordsFromFile(String filename, Set<String> wordList) {
